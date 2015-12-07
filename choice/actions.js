@@ -1,11 +1,12 @@
 export const SELECT_CHOICE = 'SELECT_CHOICE'
 export const SUBMIT_ANSWER = 'SUBMIT_ANSWER'
 
-export function select(questionId, choiceId) {
+export function select(questionId, choiceId, isSelected) {
   return {
     type: SELECT_CHOICE,
     questionId,
-    choiceId
+    choiceId,
+    isSelected
   }
 }
 

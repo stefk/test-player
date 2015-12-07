@@ -1,19 +1,29 @@
 import {SELECT_CHOICE, SUBMIT_ANSWER} from './actions.js'
 
-const initial = {
-  question: null,
-  choiceId: null,
-  enableChoice: true,
-  enableSubmit: false
-}
-
-export function choiceQuestion(state = initial, action) {
+export function choiceQuestion(state, action) {
   switch (action.type) {
     case SELECT_CHOICE:
       let newState = {}
- 
+
       if (state.enableChoice) {
-        newState.choiceId = action.choiceId
+        if (state.question.multiple) {
+          if (action.isSelected) {
+            newState.selectedIds = [
+              ...state.selectedIds,
+              action.choiceId
+            ]
+          } else {
+            let index = state.selectedIds.indexOf(action.choiceId)
+            newState.selectedIds = [
+              ...state.selectedIds.slice(0, index),
+              ...state.selectedIds.slice(index + 1)
+            ]
+          }
+        } else {
+          newState.selectedIds = action.isSelected ?
+           [action.choiceId] :
+           []
+        }
       }
 
       if (!state.enableSubmit) {

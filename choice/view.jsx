@@ -5,12 +5,15 @@ import {dispatch} from './../store'
 const Choice = props =>
   <div>
     <input
-      type="radio"
+      type={props.multiple ? "checkbox" : "radio"}
       id={props.id}
       name={props.questionId}
       value={props.id}
       disabled={!props.enabled}
-      onChange={() => dispatch(select(props.questionId, props.id))}
+      defaultChecked={props.selected}
+      onChange={e => dispatch(
+        select(props.questionId, props.id, e.target.checked)
+      )}
     />
     <label htmlFor={props.id}>{props.text}</label>
   </div>
@@ -25,6 +28,8 @@ const Choices = props =>
         text={choice.text}
         questionId={props.question.id}
         enabled={props.enableChoice}
+        selected={props.selectedIds.indexOf(choice.id) > -1}
+        multiple={props.question.multiple}
       />
     )}
     <input 
@@ -41,11 +46,13 @@ Choices.propTypes = {
   question: T.shape({
     id: T.string.isRequired,
     title: T.string.isRequired,
+    multiple: T.bool.isRequired,
     choices: T.arrayOf(T.shape({
       id: T.string.isRequired,
       text: T.string.isRequired
     })).isRequired
   }).isRequired,
+  selectedIds: T.arrayOf(T.string).isRequired,
   enableChoice: T.bool.isRequired,
   enableSubmit: T.bool.isRequired
 }

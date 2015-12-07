@@ -4,7 +4,7 @@ import questions from './choice/samples'
 
 let data = {
   question: questions[0],
-  choiceId: null,
+  selectedIds: [],
   enableChoice: true,
   enableSubmit: false,
 }
