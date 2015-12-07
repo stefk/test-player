@@ -12,6 +12,7 @@
   "dependencies": {
     "install": "^0.4.0",
     "react": "^0.14.3",
+    "react-addons-update": "^0.14.3",
     "react-dom": "^0.14.3",
     "redux": "^3.0.4"
   },

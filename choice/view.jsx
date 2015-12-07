@@ -1,5 +1,5 @@
 import React from 'react';
-import {select, submit} from './actions'
+import {select, deselect, submit} from './actions'
 import {dispatch} from './../store'
 
 const Choice = props =>
@@ -12,17 +12,19 @@ const Choice = props =>
       disabled={!props.enabled}
       defaultChecked={props.selected}
       onChange={e => dispatch(
-        select(props.questionId, props.id, e.target.checked)
+        e.target.checked ?
+          select(props.questionId, props.id) :
+          deselect(props.questionId, props.id)
       )}
     />
     <label htmlFor={props.id}>{props.text}</label>
   </div>
 
-const Choices = props => 
-  <div> 
+const Choices = props =>
+  <div>
     <h3>Question title: {props.question.title}</h3>
-    { props.question.choices.map(choice => 
-      <Choice 
+    { props.question.choices.map(choice =>
+      <Choice
         key={choice.id}
         id={choice.id}
         text={choice.text}
@@ -32,9 +34,9 @@ const Choices = props =>
         multiple={props.question.multiple}
       />
     )}
-    <input 
-      type="submit" 
-      value="Submit" 
+    <input
+      type="submit"
+      value="Submit"
       disabled={!props.enableSubmit}
       onClick={() => dispatch(submit(props.question.id))}
     />
