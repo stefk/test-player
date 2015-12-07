@@ -7,7 +7,7 @@ const Choice = props =>
     <input
       type="radio"
       id={props.id}
-      name={props.name}
+      name={props.questionId}
       value={props.id}
       disabled={!props.enabled}
       onChange={() => dispatch(select(props.questionId, props.id))}
@@ -23,7 +23,7 @@ const Choices = props =>
         key={choice.id}
         id={choice.id}
         text={choice.text}
-        name={props.question.id}
+        questionId={props.question.id}
         enabled={props.enableChoice}
       />
     )}
