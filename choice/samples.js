@@ -1,7 +1,7 @@
 export default [
   {
     "id": "1",
-    "title": "Some question ?",
+    "title": "Ispum ?",
     "multiple": true,
     "choices": [
       {
@@ -20,15 +20,15 @@ export default [
   },
   {
     "id": "2",
-    "title": "Other question ?",
+    "title": "Sit amet ?",
     "multiple": false,
     "choices": [
       {
-        "id": "2",
+        "id": "4",
         "text": "Baz"
       },
       {
-        "id": "3",
+        "id": "5",
         "text": "Quz"
       }
     ]

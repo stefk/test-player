@@ -22,8 +22,8 @@ const Choice = props =>
 
 const Choices = props =>
   <div>
-    <h3>Question title: {props.question.title}</h3>
-    { props.question.choices.map(choice =>
+    <h3>Question: {props.question.title}</h3>
+    {props.question.choices.map(choice =>
       <Choice
         key={choice.id}
         id={choice.id}

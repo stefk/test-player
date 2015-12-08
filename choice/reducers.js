@@ -1,3 +1,4 @@
+import invariant from 'invariant'
 import update from 'react-addons-update'
 import {
   SELECT_CHOICE,
@@ -5,10 +6,16 @@ import {
   SUBMIT_ANSWER
 } from './actions'
 
-function assertSelectionEnabled(state) {
-  if (!state.enableChoice) {
-    throw new Error('Choice (de-)selection not enabled')
-  }
+function assertSelectionEnabled(state, questionId) {
+/*  var enabled = state.questions.some(question =>
+    question.question.id === questionId && question.enableChoice
+  )
+
+  invariant(
+    enabled,
+    'Choice (de-)selection not enabled for question %s',
+    questionId
+  )*/
 }
 
 function select(state, choiceId) {
@@ -46,6 +53,10 @@ function deselect(state, choiceId) {
 }
 
 export function choiceQuestion(state, action) {
+  if (state.question.id !== action.questionId) {
+    return state
+  }
+
   switch (action.type) {
     case SELECT_CHOICE:
       return select(state, action.choiceId)
