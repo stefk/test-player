@@ -6,20 +6,12 @@ import {
   SUBMIT_ANSWER
 } from './actions'
 
-function assertSelectionEnabled(state, questionId) {
-/*  var enabled = state.questions.some(question =>
-    question.question.id === questionId && question.enableChoice
-  )
-
-  invariant(
-    enabled,
-    'Choice (de-)selection not enabled for question %s',
-    questionId
-  )*/
-}
-
 function select(state, choiceId) {
-  assertSelectionEnabled(state)
+  invariant(
+    state.enableChoice,
+    'Choice selection disabled for question %s',
+    state.question.id
+  )
 
   if (state.question.multiple) {
     return update(state, {
@@ -35,7 +27,11 @@ function select(state, choiceId) {
 }
 
 function deselect(state, choiceId) {
-  assertSelectionEnabled(state)
+  invariant(
+    state.enableChoice,
+    'Choice deselection disabled for question %s',
+    state.question.id
+  )
 
   if (state.question.multiple) {
     return update(state, {
@@ -52,6 +48,19 @@ function deselect(state, choiceId) {
   })
 }
 
+function submit(state) {
+  invariant(
+    state.enableSubmit,
+    'Answer submission disabled for question %s',
+    state.question.id
+  )
+
+  return update(state, {
+    enableChoice: {$set: false},
+    enableSubmit: {$set: false}
+  })
+}
+
 export function choiceQuestion(state, action) {
   if (state.question.id !== action.questionId) {
     return state
@@ -63,10 +72,7 @@ export function choiceQuestion(state, action) {
     case DESELECT_CHOICE:
       return deselect(state, action.choiceId)
     case SUBMIT_ANSWER:
-      return update(state, {
-        enableChoice: {$set: false},
-        enableSubmit: {$set: false}
-      })
+      return submit(state)
     default:
       return state
   }
