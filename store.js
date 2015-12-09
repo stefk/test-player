@@ -1,21 +1,42 @@
 import {createStore} from 'redux'
-import {choiceQuestion} from './choice/reducers'
-import questions from './choice/samples'
+import {resolve} from './resolver'
+import choices from './choice/samples'
+import clozes from './cloze/samples'
 
 let data = {
   title: 'Lorem',
   questions: [
     {
-      question: questions[0],
+      question: choices[0],
       selectedIds: [],
       enableChoice: true,
       enableSubmit: false
     },
     {
-      question: questions[1],
+      question: choices[1],
       selectedIds: [],
       enableChoice: true,
       enableSubmit: false
+    },
+    {
+      question: clozes[0],
+      tokens: [
+        {
+          type: 'text',
+          data: 'Foo bar '
+        },
+        {
+          type: 'hole',
+          data: {
+            id: "1"
+          }
+        },
+        {
+          type: 'text',
+          data: ' baz '
+        }
+      ],
+      filledHoles: []
     }
   ]
 }
@@ -23,10 +44,9 @@ let data = {
 function reduce(state, action) {
   return {
     title: state.title,
-    questions: [
-      choiceQuestion(state.questions[0], action),
-      choiceQuestion(state.questions[1], action)
-    ]
+    questions: state.questions.map(question =>
+      resolve(question.question).reducer(question, action)
+    )
   }
 }
 

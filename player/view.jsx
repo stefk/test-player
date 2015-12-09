@@ -1,12 +1,17 @@
 import React from 'react'
-import Choices from './../choice/view.jsx'
+import {resolve} from './../resolver'
 
 const Player = props =>
   <div>
     <h1>Quiz: {props.title}</h1>
-    {props.questions.map(question =>
-      <Choices key={question.question.id} {...question}/>
-    )}
+    {props.questions.map(question => {
+      question.key = `${question.question.type}-${question.question.id}`
+
+      return React.createElement(
+        resolve(question.question).component,
+        question
+      )
+    })}
   </div>
 
 let T = React.PropTypes

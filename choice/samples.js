@@ -1,6 +1,7 @@
 export default [
   {
     "id": "1",
+    "type": "application/x.choice+json",
     "title": "Ispum ?",
     "multiple": true,
     "choices": [
@@ -20,6 +21,7 @@ export default [
   },
   {
     "id": "2",
+    "type": "application/x.choice+json",
     "title": "Sit amet ?",
     "multiple": false,
     "choices": [
