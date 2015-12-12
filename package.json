@@ -1,17 +1,19 @@
 {
   "name": "react-test",
+  "description": "react quiz player",
+  "repository": "http://github.com/stefk/test-player",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node_modules/.bin/webpack-dev-server --inline",
-    "build": "node_modules/.bin/webpack"
+    "start": "webpack-dev-server --inline",
+    "build": "webpack"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "install": "^0.4.0",
     "invariant": "^2.2.0",
+    "lodash": "^3.10.1",
     "react": "^0.14.3",
     "react-addons-update": "^0.14.3",
     "react-dom": "^0.14.3",

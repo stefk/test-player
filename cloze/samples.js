@@ -1,6 +1,6 @@
 export default [
   {
-    "id": "1",
+    "id": "3",
     "type": "application/x.cloze+json",
     "title": "Augustus ?",
     "text": "Lorem [[1]] dolor sit [[2]].",

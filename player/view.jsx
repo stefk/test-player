@@ -14,7 +14,7 @@ const Player = props =>
     })}
   </div>
 
-let T = React.PropTypes
+const T = React.PropTypes
 
 Player.propTypes = {
   title: T.string.isRequired,

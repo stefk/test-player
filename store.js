@@ -3,7 +3,7 @@ import {resolve} from './resolver'
 import choices from './choice/samples'
 import clozes from './cloze/samples'
 
-let data = {
+const data = {
   title: 'Lorem',
   questions: [
     {
@@ -20,6 +20,7 @@ let data = {
     },
     {
       question: clozes[0],
+      enableSubmit: false,
       tokens: [
         {
           type: 'text',
@@ -28,17 +29,34 @@ let data = {
         {
           type: 'hole',
           data: {
-            id: "1",
+            id: '1',
             size: 10,
-            placeholder: ""
+            placeholder: ''
           }
         },
         {
           type: 'text',
           data: ' baz '
-        }
+        },
+        {
+          type: 'hole',
+          data: {
+            id: '2',
+            size: 12,
+            placeholder: 'quz'
+          }
+        },
       ],
-      filledHoles: []
+      filledHoles: [
+        {
+          id: '1',
+          text: 'FOO'
+        },
+        {
+          id: '2',
+          text: ''
+        }
+      ]
     }
   ]
 }
@@ -52,9 +70,9 @@ function reduce(state, action) {
   }
 }
 
-let store = createStore(reduce, data)
+const store = createStore(reduce, data)
 
-let dispatch = action => {
+const dispatch = action => {
   console.log('Dispatching...', action)
   store.dispatch(action)
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import {fill, submit} from './actions'
-import {delayUnique} from './../utils'
 import {dispatch} from './../store'
+import {makeEventDebouncer} from './../utils'
 
 const Text = props =>
   <span>{props.text}</span>
@@ -11,9 +11,10 @@ const Hole = props =>
     type="text"
     size={props.size}
     placeholder={props.placeholder}
-    onChange={delayUnique(500, e => dispatch(
-      fill(props.questionId, props.choiceId, e.target.value)
-    ))}
+    defaultValue={props.text}
+    onChange={makeEventDebouncer(e => dispatch(
+      fill(props.questionId, props.holeId, e.target.value)
+    ), 400)}
   />
 
 const Cloze = props =>
@@ -26,7 +27,10 @@ const Cloze = props =>
           <Hole
             key={index}
             questionId={props.question.id}
-            choiceId={token.data.id}
+            holeId={token.data.id}
+            text={props.filledHoles.find(hole =>
+              hole.id === token.data.id
+            ).text}
             size={token.data.size}
             placeholder={token.data.placeholder}
           />
@@ -35,11 +39,12 @@ const Cloze = props =>
     <input
       type="submit"
       value="Submit"
+      disabled={!props.enableSubmit}
       onClick={() => dispatch(submit(props.question.id))}
     />
   </div>
 
-let T = React.PropTypes
+const T = React.PropTypes
 
 Text.propTypes = {
   text: T.string.isRequired
@@ -47,7 +52,8 @@ Text.propTypes = {
 
 Hole.propTypes = {
   questionId: T.string.isRequired,
-  choiceId: T.string.isRequired,
+  holeId: T.string.isRequired,
+  text: T.string.isRequired,
   size: T.number.isRequired,
   placeholder: T.string.isRequired
 }

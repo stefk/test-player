@@ -1,24 +1,19 @@
+import debounce from 'lodash/function/debounce'
+
 /**
- * Returns a function that will execute a callback
- * after a certain amount of time. Any call to that
- * function in the meanwhile will postpone the callback
- * execution by the same amount of time, thus preventing
- * any concurrent executions.
+ * Creates a debounced event handler that will execute
+ * a callback after a certain amount of time. Any subsequent
+ * call in the meanwhile postpones the callback execution by
+ * the same amount of time.
  *
- * @param {Number}   time
  * @param {Function} callback
+ * @param {Number}   delay
  */
-export function delayUnique(time, callback) {
-  var timeout = false
+export function makeEventDebouncer(callback, delay) {
+  const debounced = debounce(callback, delay)
 
-  return (...args) => {
-    if (timeout) {
-      clearTimeout(timeout)
-    }
-
-    timeout = setTimeout(() => {
-      timeout = false
-      callback.apply(null, args)
-    }, time)
+  return e => {
+    e.persist()
+    debounced(e)
   }
 }
