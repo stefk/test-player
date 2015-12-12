@@ -1,5 +1,6 @@
 import React from 'react'
 import {fill, submit} from './actions'
+import {delayUnique} from './../utils'
 import {dispatch} from './../store'
 
 const Text = props =>
@@ -10,9 +11,9 @@ const Hole = props =>
     type="text"
     size={props.size}
     placeholder={props.placeholder}
-    onChange={e => dispatch(
+    onChange={delayUnique(500, e => dispatch(
       fill(props.questionId, props.choiceId, e.target.value)
-    )}
+    ))}
   />
 
 const Cloze = props =>
@@ -26,6 +27,8 @@ const Cloze = props =>
             key={index}
             questionId={props.question.id}
             choiceId={token.data.id}
+            size={token.data.size}
+            placeholder={token.data.placeholder}
           />
       )}
     </div>

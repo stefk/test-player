@@ -28,7 +28,9 @@ let data = {
         {
           type: 'hole',
           data: {
-            id: "1"
+            id: "1",
+            size: 10,
+            placeholder: ""
           }
         },
         {
