@@ -1,6 +1,6 @@
 import React from 'react';
 import {select, deselect, submit} from './actions'
-import {dispatch} from './../store'
+import {dispatch} from './../player/player'
 
 const Choice = props =>
   <div>

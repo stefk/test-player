@@ -1,6 +1,6 @@
 import React from 'react'
 import {fill, submit} from './actions'
-import {dispatch} from './../store'
+import {dispatch} from './../player/player'
 import {makeEventDebouncer} from './../utils'
 
 const Text = props =>
@@ -15,6 +15,7 @@ const Hole = props =>
     onChange={makeEventDebouncer(e => dispatch(
       fill(props.questionId, props.holeId, e.target.value)
     ), 400)}
+    disabled={!props.enableFill}
   />
 
 const Cloze = props =>
@@ -33,6 +34,7 @@ const Cloze = props =>
             ).text}
             size={token.data.size}
             placeholder={token.data.placeholder}
+            enableFill={props.enableFill}
           />
       )}
     </div>
@@ -55,7 +57,8 @@ Hole.propTypes = {
   holeId: T.string.isRequired,
   text: T.string.isRequired,
   size: T.number.isRequired,
-  placeholder: T.string.isRequired
+  placeholder: T.string.isRequired,
+  enableFill: T.bool.isRequired
 }
 
 Cloze.propTypes = {
@@ -63,9 +66,15 @@ Cloze.propTypes = {
     id: T.string.isRequired,
     title: T.string.isRequired
   }).isRequired,
+  enableFill: T.bool.isRequired,
+  enableSubmit: T.bool.isRequired,
   tokens: T.arrayOf(T.shape({
     type: T.oneOf(['text', 'hole']).isRequired,
     data: T.any.isRequired
+  })).isRequired,
+  filledHoles: T.arrayOf(T.shape({
+    id: T.string.isRequired,
+    text: T.string.isRequired
   })).isRequired
 }
 

@@ -1,19 +1,15 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import {store, dispatch} from './store'
-import Player from './player/view.jsx'
-import Choices from './choice/view.jsx'
+import {createStore} from 'redux'
+import data from './data'
+import {reduce, render} from './player/player'
+import {init} from './player/actions'
 
 const container = document.querySelector('main')
-
-function render() {
-  const state = store.getState()
-  console.log('Rendering...', state)
-  ReactDOM.render(
-    React.createElement(Player, state),
-    container
-  )
+const store = createStore(reduce, data)
+const dispatch = action => {
+  console.log('Dispatching:', action)
+  store.dispatch(action)
 }
 
-store.subscribe(render)
-render()
+store.subscribe(() => render(container, store.getState()))
+dispatch(init(data, dispatch))
+

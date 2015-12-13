@@ -1,9 +1,7 @@
-import {createStore} from 'redux'
-import {resolve} from './resolver'
 import choices from './choice/samples'
 import clozes from './cloze/samples'
 
-const data = {
+export default {
   title: 'Lorem',
   questions: [
     {
@@ -20,6 +18,7 @@ const data = {
     },
     {
       question: clozes[0],
+      enableFill: true,
       enableSubmit: false,
       tokens: [
         {
@@ -50,7 +49,7 @@ const data = {
       filledHoles: [
         {
           id: '1',
-          text: 'FOO'
+          text: ''
         },
         {
           id: '2',
@@ -60,21 +59,3 @@ const data = {
     }
   ]
 }
-
-function reduce(state, action) {
-  return {
-    title: state.title,
-    questions: state.questions.map(question =>
-      resolve(question.question).reducer(question, action)
-    )
-  }
-}
-
-const store = createStore(reduce, data)
-
-const dispatch = action => {
-  console.log('Dispatching...', action)
-  store.dispatch(action)
-}
-
-export {store, dispatch}
