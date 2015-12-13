@@ -61,7 +61,7 @@ function submit(state) {
   })
 }
 
-export function choiceQuestion(state, action) {
+export function reduce(state, action) {
   if (state.question.id !== action.questionId) {
     return state
   }

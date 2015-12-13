@@ -1,9 +1,8 @@
-export const INIT_PLAYER = 'INIT_PLAYER'
+export const START_QUIZ = 'START_QUIZ'
 
-export function init(data, dispatch) {
+export function startQuiz(quiz) {
   return {
-    type: INIT_PLAYER,
-    data,
-    dispatch
+    type: START_QUIZ,
+    quiz
   }
 }

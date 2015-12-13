@@ -1,14 +1,15 @@
 import React from 'react'
-import {resolve} from './../resolver'
+import {getHandler} from './player'
 
 const Player = props =>
   <div>
     <h1>Quiz: {props.title}</h1>
     {props.questions.map(question => {
-      question.key = `${question.question.type}-${question.question.id}`
+      const data = question.question
+      question.key = `${data.type}-${data.id}`
 
       return React.createElement(
-        resolve(question.question).component,
+        getHandler(data).component,
         question
       )
     })}

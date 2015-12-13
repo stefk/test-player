@@ -38,7 +38,7 @@ function submit(state) {
   })
 }
 
-export function clozeQuestion(state, action) {
+export function reduce(state, action) {
   if (state.question.id !== action.questionId) {
     return state
   }
