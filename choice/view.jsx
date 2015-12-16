@@ -1,8 +1,7 @@
 import React from 'react';
 import {select, deselect, submit} from './actions'
-import {dispatch} from './../player/player'
 
-const Choice = props =>
+const Choice = (props, context) =>
   <div>
     <input
       type={props.multiple ? "checkbox" : "radio"}
@@ -11,7 +10,7 @@ const Choice = props =>
       value={props.id}
       disabled={!props.enabled}
       defaultChecked={props.selected}
-      onChange={e => dispatch(
+      onChange={e => context.dispatch(
         e.target.checked ?
           select(props.questionId, props.id) :
           deselect(props.questionId, props.id)
@@ -20,7 +19,7 @@ const Choice = props =>
     <label htmlFor={props.id}>{props.text}</label>
   </div>
 
-const Choices = props =>
+const Choices = (props, context) =>
   <div>
     <h3>Question: {props.question.title}</h3>
     {props.question.choices.map(choice =>
@@ -38,7 +37,7 @@ const Choices = props =>
       type="submit"
       value="Submit"
       disabled={!props.enableSubmit}
-      onClick={() => dispatch(submit(props.question.id))}
+      onClick={() => context.dispatch(submit(props.question.id))}
     />
   </div>
 
@@ -58,6 +57,9 @@ Choices.propTypes = {
   enableChoice: T.bool.isRequired,
   enableSubmit: T.bool.isRequired
 }
+
+Choice.contextTypes = {dispatch: T.func.isRequired}
+Choices.contextTypes = {dispatch: T.func.isRequired}
 
 export default Choices
 

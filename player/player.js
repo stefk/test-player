@@ -8,10 +8,6 @@ import Player from './view.jsx'
 import choice from './../choice/definition'
 import cloze from './../cloze/definition'
 
-let dispatch = () => {
-  throw new Error('"dispatch()" function missing or not initialized')
-}
-
 const questionHandlers = zipObject([choice, cloze].map(
   handler => [handler.type, handler]
 ))
@@ -31,23 +27,4 @@ function getHandler(question) {
   return questionHandlers[question.type]
 }
 
-function render(container, state) {
-  console.log('Rendering player with state:', state)
-  ReactDOM.render(
-    React.createElement(Player, state),
-    container
-  )
-}
-
-function init(quizData, dispatchFunction) {
-  dispatch = dispatchFunction
-  dispatch(startQuiz(quizData))
-}
-
-export {
-  init,
-  render,
-  reduce,
-  dispatch,
-  getHandler
-}
+export {reduce, getHandler}

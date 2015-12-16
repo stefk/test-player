@@ -1,24 +1,23 @@
 import React from 'react'
 import {fill, submit} from './actions'
-import {dispatch} from './../player/player'
 import {makeEventDebouncer} from './../utils'
 
 const Text = props =>
   <span>{props.text}</span>
 
-const Hole = props =>
+const Hole = (props, context) =>
   <input
     type="text"
     size={props.size}
     placeholder={props.placeholder}
     defaultValue={props.text}
-    onChange={makeEventDebouncer(e => dispatch(
+    onChange={makeEventDebouncer(e => context.dispatch(
       fill(props.questionId, props.holeId, e.target.value)
     ), 400)}
     disabled={!props.enableFill}
   />
 
-const Cloze = props =>
+const Cloze = (props, context) =>
   <div>
     <h3>Question: {props.question.title}</h3>
     <div>
@@ -42,7 +41,7 @@ const Cloze = props =>
       type="submit"
       value="Submit"
       disabled={!props.enableSubmit}
-      onClick={() => dispatch(submit(props.question.id))}
+      onClick={() => context.dispatch(submit(props.question.id))}
     />
   </div>
 
@@ -77,6 +76,9 @@ Cloze.propTypes = {
     text: T.string.isRequired
   })).isRequired
 }
+
+Hole.contextTypes = {dispatch: T.func.isRequired}
+Cloze.contextTypes = {dispatch: T.func.isRequired}
 
 export default Cloze
 

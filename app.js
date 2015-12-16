@@ -1,14 +1,16 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
 import {createStore} from 'redux'
-import {init, reduce, render} from './player/player'
+import {reduce} from './player/player'
+import Wrapper from './wrapper.jsx'
+import Player from './player/view.jsx'
 import data from './data'
 
 const container = document.querySelector('main')
-const store = createStore(reduce)
-const dispatch = action => {
-  console.log('Dispatching:', action)
-  store.dispatch(action)
-}
+const store = createStore(reduce, data)
 
-store.subscribe(() => render(container, store.getState()))
-init(data, dispatch)
+ReactDOM.render(
+  React.createElement(Wrapper, {store, data}, [Player]),
+  container
+)
 
